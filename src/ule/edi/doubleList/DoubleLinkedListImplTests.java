@@ -29,6 +29,7 @@ public class DoubleLinkedListImplTests {
 	
 	@Test
 	public void testToStringNoVacio(){
+		
 		Assert.assertEquals(lSABC.toString(),"[A, B, C]");		
 	}
 	
