@@ -40,7 +40,6 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 	 * LA LISTA
 	 */
 	private DoubleNode<T> cab;
-	
 
 	//////////////////////
 	///// CONSTRUCTORES
@@ -76,23 +75,21 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 		cab.next = cab;
 		cab.previous = cab;
 		DoubleNode<T> aux = cab;
-		
-		
-		for(int i = 0; i < elements.length; i++) {
+
+		for (int i = 0; i < elements.length; i++) {
 			DoubleNode<T> element = new DoubleNode<T>(elements[i]);
-			element.previous = aux; //añadimos la referencia al anterior
+			element.previous = aux; // añadimos la referencia al anterior
 			aux.next = element; // añadimos la referencia al siguiente
-			aux = aux.next; //movemos el nodo
-			
-			if(i == elements.length- 1) {
+			aux = aux.next; // movemos el nodo
+
+			if (i == elements.length - 1) {
 				element.next = cab;
 			}
-			
+
 //			System.out.println("Anterior al elemento " + i + ": " +  element.previous.content);
 //			System.out.println("Elemento " + i + ": " +  element.content);
-				
+
 		}
-		
 
 	}
 
@@ -103,15 +100,29 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 	 */
 	public DoubleLinkedListImpl(DoubleLinkedList<T> other) {
 		cab = new DoubleNode<T>(null); // nodo cabecera vacio
+		Iterator<T> it = other.iterator();
 		cab.next = cab;
 		cab.previous = cab;
-		System.out.println("lista other: " + other.toString());
-		System.out.println("Longitud: "+  other.toString().length() );
-		System.out.println(other.iterator().next());
-		
-	
-		
-		// TODO
+
+		DoubleNode<T> aux = cab;
+
+		for (int i = 0; i < other.size(); i++) {
+
+			DoubleNode<T> element = new DoubleNode<T>(it.next());
+			// System.out.println("Element " + i + ": " + element.content);
+
+			element.previous = aux; // añadimos la referencia al anterior
+			aux.next = element; // añadimos la referencia al siguiente
+			aux = aux.next; // movemos el nodo
+
+			if (i == other.size() - 1) {
+				element.next = cab;
+
+			}
+
+		}
+
+		System.out.println(size());
 	}
 
 	//////////////////////
@@ -136,13 +147,13 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 		@Override
 		public T next() {
 			int i = 0;
-			System.out.println(i++);
-			System.out.println("cab: " + at.content);
+			// System.out.println(i++);
+			// System.out.println("cab: " + at.content);
 			if (!hasNext()) {
 				throw new NoSuchElementException();
 			} else {
-				System.out.println("Content: " + at.content);
-				T ret = at.next.content;
+
+				T ret = at.content;
 				at = at.next;
 				return ret;
 			}
@@ -158,11 +169,11 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 
 	private class reverseIterator implements Iterator<T> {
 
-		private DoubleNode<T> at = cab.next;
+		private DoubleNode<T> at = cab.previous;
 
 		@Override
 		public boolean hasNext() {
-			if (at.previous == null) {
+			if (at.content == null) {
 				return false;
 			} else {
 				return true;
@@ -175,8 +186,9 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 			if (!hasNext()) {
 				throw new NoSuchElementException();
 			} else {
+				T ret = at.content;
 				at = at.previous;
-				return at.previous.content;
+				return ret;
 			}
 		}
 
@@ -191,27 +203,56 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 
 		// Definir los atributos necesarios para implementar el iterador
 
-		public OddAndEvenIterator() {
+		private DoubleNode<T> at;
+		int count;
 
+		public OddAndEvenIterator() {
+			at = cab.next.next;
+			count = 0;
 		}
 
 		@Override
 		public boolean hasNext() {
-			return false;
-			// TODO Auto-generated method stub
+			if (at.content == null) {
+				return false;
+			} else {
+				return true;
+			}
 
 		}
 
 		@Override
 		public T next() {
-			return null;
-			// TODO Auto-generated method stub
+
+			if (!hasNext()) {
+				throw new NoSuchElementException();
+			} else {
+				T ret = at.content;
+				// System.out.println("Antes: " + at.content);
+				at = at.next.next;
+				// System.out.println("Despues: " + at.content);
+				if (at.content == null) {
+
+					at = at.next;
+
+				}
+				count++;
+				System.out.println(count);
+				if (count == size()) { // Cuando llegamos al fianl
+					
+					at = at.previous; // Con el algoritmo implementados nos pasamos 1, por lo igualo a la posicion
+										// anterior
+					
+				}
+
+				// System.out.println(ret);
+				return ret;
+			}
 
 		}
 
 		@Override
 		public void remove() {
-			// TODO Auto-generated method stub
 			throw new UnsupportedOperationException();
 		}
 	};
@@ -221,17 +262,22 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 
 	@Override
 	public boolean isEmpty() {
-		return false;
-		// TODO Auto-generated method stub
 
+		if (size() == 0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override
 	public int size() {
 		DoubleNode<T> aux = cab.next;
+		// System.out.println("AUX: " + aux.content);
 		int ret = 0;
-		while(aux != null) {
-			
+		while (aux.content != null) {
+			// System.out.println("while: " + aux.content);
+			aux = aux.next;
 			ret++;
 		}
 		return ret;
@@ -332,7 +378,7 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 				rx.append(i.content);
 				rx.append(", ");
 				i = i.next;
-				//System.out.println(rx.toString());
+				// System.out.println(rx.toString());
 			}
 			rx.delete(rx.length() - 2, rx.length());
 			rx.append("]");
@@ -348,8 +394,7 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 	///////////////////////////////////////
 	@Override
 	public Iterator<T> oddAndEvenIterator() {
-		return null;
-		// TODO Auto-generated method stub
+		return new OddAndEvenIterator();
 
 	}
 

@@ -65,6 +65,7 @@ public class DoubleLinkedListImplTests {
 	@Test
 	public void testOddAndEvenIt() {
 		lS = new DoubleLinkedListImpl<>("A", "B", "C", "D", "E");
+		System.out.println(lS.toString());
 		Iterator<String> i = lS.oddAndEvenIterator();
 		Assert.assertTrue(i.hasNext());
 		Assert.assertEquals("B", i.next());
@@ -76,6 +77,7 @@ public class DoubleLinkedListImplTests {
 		Assert.assertEquals("C", i.next());
 		Assert.assertTrue(i.hasNext());
 		Assert.assertEquals("E", i.next());
+		System.out.println(i.hasNext());
 		Assert.assertFalse(i.hasNext());
 	    Assert.assertEquals("[A, B, C, D, E]", lS.toString());
 	}
