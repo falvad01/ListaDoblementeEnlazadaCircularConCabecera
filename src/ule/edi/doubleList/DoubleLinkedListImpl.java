@@ -84,6 +84,8 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 
 			if (i == elements.length - 1) {
 				element.next = cab;
+				cab.previous = element;// referencia de la cabeza al anterior
+
 			}
 
 //			System.out.println("Anterior al elemento " + i + ": " +  element.previous.content);
@@ -117,12 +119,13 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 
 			if (i == other.size() - 1) {
 				element.next = cab;
+				cab.previous = element;// referencia de la cabeza al anterior
 
 			}
 
 		}
 
-		System.out.println(size());
+		// System.out.println(size());
 	}
 
 	//////////////////////
@@ -174,6 +177,7 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 		@Override
 		public boolean hasNext() {
 			if (at.content == null) {
+
 				return false;
 			} else {
 				return true;
@@ -239,10 +243,10 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 				count++;
 				System.out.println(count);
 				if (count == size()) { // Cuando llegamos al fianl
-					
+
 					at = at.previous; // Con el algoritmo implementados nos pasamos 1, por lo igualo a la posicion
 										// anterior
-					
+
 				}
 
 				// System.out.println(ret);
@@ -285,13 +289,46 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 
 	@Override
 	public void addFirst(T element) {
-		// TODO Auto-generated method stub
+		DoubleNode<T> nodeElement = new DoubleNode<T>(element);
+
+		if (isEmpty()) {
+			cab.next = nodeElement;
+			cab.previous = nodeElement;
+			nodeElement.previous = cab;
+			nodeElement.next = cab;
+
+		} else {
+
+			DoubleNode<T> aux = cab.next; // Guadamos en un auxiliar el que era antes el primero
+			cab.next = nodeElement;
+			nodeElement.previous = cab;
+			nodeElement.next = aux;
+			aux.previous = nodeElement;
+		}
 
 	}
 
 	@Override
 	public void addLast(T element) {
-		// TODO Auto-generated method stub
+		DoubleNode<T> nodeElement = new DoubleNode<T>(element);
+
+		if (isEmpty()) {
+			cab.next = nodeElement;
+			cab.previous = nodeElement;
+			nodeElement.previous = cab;
+			nodeElement.next = cab;
+
+		} else {
+
+			DoubleNode<T> aux = cab.previous; //Vamos al ultimo de la lista
+			
+			System.out.println(aux.content);
+			aux.next = nodeElement;
+			nodeElement.previous =aux;
+			nodeElement.next = cab;
+			
+			
+		}
 
 	}
 
