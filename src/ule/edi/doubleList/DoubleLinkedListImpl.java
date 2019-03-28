@@ -311,9 +311,9 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 	@Override
 	public void addLast(T element) {
 		DoubleNode<T> nodeElement = new DoubleNode<T>(element);
-		System.out.println(element);
+		// System.out.println(element);
 		if (isEmpty()) {
-			System.out.println("Entra una vez");
+			// System.out.println("Entra una vez");
 			cab.next = nodeElement;
 			cab.previous = nodeElement;
 			nodeElement.previous = cab;
@@ -322,8 +322,8 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 		} else {
 
 			DoubleNode<T> aux = cab.previous; // Vamos al ultimo de la lista
-			System.out.println("El resto de veces");
-			System.out.println("Contest " + aux.content);
+			// System.out.println("El resto de veces");
+			// System.out.println("Contest " + aux.content);
 			aux.next = nodeElement;
 			nodeElement.previous = aux;
 			nodeElement.next = cab;
@@ -373,12 +373,12 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 		int i = 0;
 		while (i < n) {
 			this.addLast(element);
-			System.out.println(i);
+			// System.out.println(i);
 			i++;
 
 		}
 
-		System.out.println(toString());
+		// System.out.println(toString());
 
 	}
 
@@ -387,95 +387,104 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 
 		if (isEmpty()) {
 			throw new IndexOutOfBoundsException();
-			
+
 		} else if (p > size()) {
-			
+
 			throw new IndexOutOfBoundsException();
 
 		} else {
-			
+
 			int i = 1;
-			DoubleNode<T> aux = cab.next;
-			while(i < p) {
-				aux = aux.next;
+
+			Iterator<T> it = this.iterator();
+			T ret = null;
+			while (i <= p) {
+
+				ret = it.next();
 				i++;
 			}
-			return aux.content;
+			return ret;
 
 		}
 
-		
 	}
 
 	@Override
 	public void setElem(T elem, int p) {
-		
+
 		DoubleNode<T> aux = cab.next;
 		DoubleNode<T> toChange = cab.next;
-		boolean flag = true;
-		
-		
-		for(int i = 1;aux.content != null; i++ ) {
-			
-			if(i == p) {
+
+		for (int i = 1; aux.content != null; i++) {
+
+			if (i == p) {
 				toChange = aux;
 			}
 			aux = aux.next;
 		}
-		
+
 		toChange.content = elem;
-		
-		
-		while(aux.content != null) {
-			
+
+		while (aux.content != null) {
+
 		}
-		
+
 	}
 
 	@Override
 	public int indexOf(T elem) {
-		
-		DoubleNode<T> aux = cab.next;
+
+		Iterator<T> it = this.iterator();
 		boolean flag = true;
 		int i = 0;
 		int ret = -1;
-		while(aux.content != null) {
-			
-			if(flag && aux.content.equals(elem)) {
-				ret = i + 1; 
+		T element;
+
+		while (it.hasNext() != false) {
+			element = it.next();
+
+			if (flag && element.equals(elem)) {
+
+				ret = i + 1;
 				flag = false;
 			}
-			aux = aux.next;
 			i++;
-			
 		}
-		
-		if(ret == -1) {
+
+		if (ret == -1) {
 			throw new NoSuchElementException();
-		}else {
+		} else {
+
 			return ret;
 		}
-		
-		 
+
 	}
 
 	@Override
-	public int indexOf(T elem, int p) {
-		DoubleNode<T> aux = cab.next;
+	public int indexOf(T elem, int p) {// TODO preguntar diferencia entre las excepciones
+
+		Iterator<T> it = this.iterator();
 		boolean flag = true;
+		T element;
 		int ret = -1;
-		for(int i = 1;aux.content != null; i++ ) {
-			
-			if( i >= p && flag && aux.content.equals(elem)) {
-				ret = i;
-				flag = false;
-				
+		int j = 1;
+
+		for (int i = 1; it.hasNext() != false; i++) {
+			element = it.next();
+			if (i > p - 1 && flag) {
+				if (element.equals(elem)) {
+					ret = j;
+					flag = false;
+				}
+				j++;
 			}
-			aux = aux.next;
-			
 		}
 		
-		return 0;
+		if (ret == -1) {
+			throw new NoSuchElementException();
+		} else {
+			return ret;
+		}
 	}
 
 	@Override
