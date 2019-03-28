@@ -208,5 +208,31 @@ public class DoubleLinkedListImplTests {
 		lSABC.getElem(4);
 
 	}
+	
+	@Test
+	public void testSetElem() {
+		lSABC.setElem("J", 2);
+		Assert.assertEquals(lSABC.toString(), "[A, J, C]");
+		lSABCDE.setElem("H", 5);
+		Assert.assertEquals(lSABCDE.toString(), "[A, B, C, D, H]");
+	}
+	@Test
+	public void testIndexOf() {
+		
+		Assert.assertEquals(3,lSABC.indexOf("C"));
+		Assert.assertEquals(5,lSABCDE.indexOf("E"));
+		lSABC.addNTimes("J", 5);
+		Assert.assertEquals(4,lSABC.indexOf("J"));
+
+		
+	}
+	
+	@Test(expected = NoSuchElementException.class)
+	public void testIndexOfNoEncontrado() {
+		Assert.assertEquals(3,lSABC.indexOf("D"));
+
+		
+	}
+	
 
 }

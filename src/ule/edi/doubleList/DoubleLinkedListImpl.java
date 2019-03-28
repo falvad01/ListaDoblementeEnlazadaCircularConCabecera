@@ -409,14 +409,54 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 
 	@Override
 	public void setElem(T elem, int p) {
-		// TODO Auto-generated method stub
-
+		
+		DoubleNode<T> aux = cab.next;
+		DoubleNode<T> toChange = cab.next;
+		boolean flag = true;
+		
+		
+		for(int i = 1;aux.content != null; i++ ) {
+			
+			if(i == p) {
+				toChange = aux;
+			}
+			aux = aux.next;
+		}
+		
+		toChange.content = elem;
+		
+		
+		while(aux.content != null) {
+			
+		}
+		
 	}
 
 	@Override
 	public int indexOf(T elem) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		DoubleNode<T> aux = cab.next;
+		boolean flag = true;
+		int i = 0;
+		int ret = -1;
+		while(aux.content != null) {
+			
+			if(flag && aux.content.equals(elem)) {
+				ret = i + 1; 
+				flag = false;
+			}
+			aux = aux.next;
+			i++;
+			
+		}
+		
+		if(ret == -1) {
+			throw new NoSuchElementException();
+		}else {
+			return ret;
+		}
+		
+		 
 	}
 
 	@Override
