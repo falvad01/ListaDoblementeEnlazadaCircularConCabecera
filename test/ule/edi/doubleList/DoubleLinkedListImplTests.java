@@ -64,7 +64,8 @@ public class DoubleLinkedListImplTests {
 	@Test(expected = UnsupportedOperationException.class)
 	public void testRemoveForwardItException() {
 		Iterator<String> i = lS.iterator();
-		i.remove();;
+		i.remove();
+		;
 	}
 
 	@Test
@@ -80,20 +81,21 @@ public class DoubleLinkedListImplTests {
 		Assert.assertTrue(i.hasNext());
 		Assert.assertEquals("A", i.next());
 		Assert.assertFalse(i.hasNext());
-		Assert.assertEquals("[A, B, C, D]", lS.toString()); //TODO ¿El toString siempre tiene que ir ordenador?
+		Assert.assertEquals("[A, B, C, D]", lS.toString()); // TODO ¿El toString siempre tiene que ir ordenador?
 	}
-	
+
 	@Test(expected = NoSuchElementException.class)
 	public void testReverseItException() {
 		Iterator<String> i = lS.reverseIterator();
 		Assert.assertFalse(i.hasNext());
 		i.next();
 	}
-	
+
 	@Test(expected = UnsupportedOperationException.class)
 	public void testRemovereverseItException() {
 		Iterator<String> i = lS.reverseIterator();
-		i.remove();;
+		i.remove();
+		;
 	}
 
 	@Test
@@ -121,35 +123,90 @@ public class DoubleLinkedListImplTests {
 		Assert.assertFalse(i.hasNext());
 		i.next();
 	}
-	
+
 	@Test(expected = UnsupportedOperationException.class)
 	public void testRemoveOddAndEvenItException() {
 		Iterator<String> i = lS.oddAndEvenIterator();
-		i.remove();;
+		i.remove();
+		;
 	}
-	
+
 	@Test
 	public void testAddFirst() {
-		
+
 		Assert.assertTrue(lS.isEmpty());
 		lS.addFirst("A");
 		Assert.assertEquals("[A]", lS.toString());
 		Assert.assertFalse(lS.isEmpty());
 		lSABC.addFirst("F");
 		Assert.assertEquals(lSABC.toString(), "[F, A, B, C]");
-		
+
 	}
-	
+
 	@Test
 	public void testAddLast() {
-		
+
 		Assert.assertTrue(lS.isEmpty());
-		lS.addLast("A");
-		Assert.assertEquals("[A]", lS.toString());
-		Assert.assertFalse(lS.isEmpty());
+		// lS.addLast("A");
+//		Assert.assertEquals("[A]", lS.toString());
+//		Assert.assertFalse(lS.isEmpty());
+
 		lSABC.addLast("F");
 		Assert.assertEquals(lSABC.toString(), "[A, B, C, F]");
-		
+
+		lSABC.addLast("H");
+		Assert.assertEquals(lSABC.toString(), "[A, B, C, F, H]");
+
+	}
+
+	@Test
+	public void testaddAtPos() {
+
+		Assert.assertTrue(lS.isEmpty());
+		lS.addAtPos("A", 4);
+		Assert.assertEquals("[A]", lS.toString());
+		Assert.assertFalse(lS.isEmpty());
+		lSABC.addAtPos("F", 2);
+		lSABC.addAtPos("H", 4); // Añadimos el penultimo
+		Assert.assertEquals(lSABC.toString(), "[A, F, B, H, C]");
+		lSABCDE.addAtPos("F", 4);
+		Assert.assertEquals(lSABCDE.toString(), "[A, B, C, F, D, E]");
+		lSABCDE.addAtPos("H", 7);
+		Assert.assertEquals(lSABCDE.toString(), "[A, B, C, F, D, E, H]");
+		lSABCDE.addAtPos("J", 7);
+		Assert.assertEquals(lSABCDE.toString(), "[A, B, C, F, D, E, J, H]");
+
+	}
+
+	@Test
+	public void testAddNTimes() {
+
+		lS.addNTimes("Z", 3);
+		Assert.assertEquals(lS.toString(), "[Z, Z, Z]");
+		lSABC.addNTimes("J", 5);
+		Assert.assertEquals(lSABC.toString(), "[A, B, C, J, J, J, J, J]");
+	}
+
+	@Test
+	public void testGetElem() {
+	
+		Assert.assertEquals("C",lSABC.getElem(3));
+		Assert.assertEquals("E",lSABCDE.getElem(5));
+			
+	}
+
+	@Test(expected = IndexOutOfBoundsException.class)
+	public void testGetElemListaVacia() {
+
+		lS.getElem(1);
+
 	}
 	
+	@Test(expected = IndexOutOfBoundsException.class)
+	public void testGetElemFueraLista() {
+
+		lSABC.getElem(4);
+
+	}
+
 }

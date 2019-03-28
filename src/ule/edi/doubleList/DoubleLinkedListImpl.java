@@ -311,8 +311,9 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 	@Override
 	public void addLast(T element) {
 		DoubleNode<T> nodeElement = new DoubleNode<T>(element);
-
+		System.out.println(element);
 		if (isEmpty()) {
+			System.out.println("Entra una vez");
 			cab.next = nodeElement;
 			cab.previous = nodeElement;
 			nodeElement.previous = cab;
@@ -320,34 +321,90 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 
 		} else {
 
-			DoubleNode<T> aux = cab.previous; //Vamos al ultimo de la lista
-			
-			System.out.println(aux.content);
+			DoubleNode<T> aux = cab.previous; // Vamos al ultimo de la lista
+			System.out.println("El resto de veces");
+			System.out.println("Contest " + aux.content);
 			aux.next = nodeElement;
-			nodeElement.previous =aux;
+			nodeElement.previous = aux;
 			nodeElement.next = cab;
-			
-			
+			cab.previous = nodeElement; // Cerramos el ciclo apuntando el previus de la cabeza al nuevo ultimo elemento
+
 		}
 
 	}
 
 	@Override
 	public void addAtPos(T element, int p) {
-		// TODO Auto-generated method stub
+
+		DoubleNode<T> nodeElement = new DoubleNode<T>(element);
+
+		if (p > this.size()) {// Cuando la posicion en la que lo insertamos es mayor que el tamaño de la lista
+
+			this.addLast(element);
+		} else {
+			DoubleNode<T> aux = cab.next; // Guadamos en un auxiliar el que era antes el primero
+
+			DoubleNode<T> previus = cab;
+			DoubleNode<T> next = cab;
+
+			int i = 0;
+			while (aux.content != null) {
+				if (i < p - 1) { // Guardamos el nodo anterior a donde guardamos el nuevo elemento
+					previus = aux;
+					next = aux.next;
+
+				}
+				aux = aux.next;
+
+				i++;
+			}
+
+			previus.next = nodeElement;
+			nodeElement.previous = previus;
+			nodeElement.next = next;
+			next.previous = nodeElement;
+
+		}
 
 	}
 
 	@Override
 	public void addNTimes(T element, int n) {
-		// TODO Auto-generated method stub
+		int i = 0;
+		while (i < n) {
+			this.addLast(element);
+			System.out.println(i);
+			i++;
+
+		}
+
+		System.out.println(toString());
 
 	}
 
 	@Override
 	public T getElem(int p) {
-		// TODO Auto-generated method stub
-		return null;
+
+		if (isEmpty()) {
+			throw new IndexOutOfBoundsException();
+			
+		} else if (p > size()) {
+			
+			throw new IndexOutOfBoundsException();
+
+		} else {
+			
+			int i = 1;
+			DoubleNode<T> aux = cab.next;
+			while(i < p) {
+				aux = aux.next;
+				i++;
+			}
+			return aux.content;
+
+		}
+
+		
 	}
 
 	@Override
