@@ -461,7 +461,20 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 
 	@Override
 	public int indexOf(T elem, int p) {
-		// TODO Auto-generated method stub
+		DoubleNode<T> aux = cab.next;
+		boolean flag = true;
+		int ret = -1;
+		for(int i = 1;aux.content != null; i++ ) {
+			
+			if( i >= p && flag && aux.content.equals(elem)) {
+				ret = i;
+				flag = false;
+				
+			}
+			aux = aux.next;
+			
+		}
+		
 		return 0;
 	}
 

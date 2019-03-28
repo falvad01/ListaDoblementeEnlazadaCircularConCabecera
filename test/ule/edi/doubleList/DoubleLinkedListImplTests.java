@@ -217,7 +217,7 @@ public class DoubleLinkedListImplTests {
 		Assert.assertEquals(lSABCDE.toString(), "[A, B, C, D, H]");
 	}
 	@Test
-	public void testIndexOf() {
+	public void testIndexOfElem() {
 		
 		Assert.assertEquals(3,lSABC.indexOf("C"));
 		Assert.assertEquals(5,lSABCDE.indexOf("E"));
@@ -228,11 +228,30 @@ public class DoubleLinkedListImplTests {
 	}
 	
 	@Test(expected = NoSuchElementException.class)
-	public void testIndexOfNoEncontrado() {
+	public void testIndexOfElemNoEncontrado() {
 		Assert.assertEquals(3,lSABC.indexOf("D"));
 
 		
 	}
 	
+	@Test
+	public void testIndexOfElemP() {
+		
+		Assert.assertEquals(1,lSABC.indexOf("C",3));
+		Assert.assertEquals(4,lSABCDE.indexOf("E",2));
+		lSABC.addNTimes("J", 5);
+		Assert.assertEquals(1,lSABC.indexOf("J"),4);
+		lSABCDE.addLast("A");
+		Assert.assertEquals(5,lSABCDE.indexOf("A"),2);
+
+		
+	}
+	
+	@Test(expected = NoSuchElementException.class)
+	public void testIndexOfElemPNoEncontrado() {
+		Assert.assertEquals(3,lSABC.indexOf("D"));
+
+		
+	}
 
 }
