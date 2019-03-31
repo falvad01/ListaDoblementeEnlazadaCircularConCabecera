@@ -1,6 +1,5 @@
 package ule.edi.doubleList;
 
-import java.io.DataOutputStream;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -149,7 +148,7 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 
 		@Override
 		public T next() {
-			int i = 0;
+
 			// System.out.println(i++);
 			// System.out.println("cab: " + at.content);
 			if (!hasNext()) {
@@ -479,7 +478,7 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 				j++;
 			}
 		}
-		
+
 		if (ret == -1) {
 			throw new NoSuchElementException();
 		} else {
@@ -489,14 +488,67 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 
 	@Override
 	public T removeFirst(T elem) throws EmptyCollectionException {
-		// TODO Auto-generated method stub
-		return null;
+
+		if (isEmpty()) {
+			throw new EmptyCollectionException("Coleccion vacia");
+		} else {
+			int pos = this.indexOf(elem);
+
+			if (pos == 1) {
+
+				T ret = cab.next.content;
+				cab.next = cab.next.next;
+				cab.next.next.previous = cab;
+				return ret;
+
+			} else {
+
+				DoubleNode<T> aux = cab.next;
+				for (int i = 1; i < pos - 1; i++) {
+
+					aux = aux.next;
+
+				}
+				T ret = aux.next.content;
+
+				aux.next = aux.next.next;
+				aux.next.next.previous = aux;
+				return ret;
+			}
+		}
+
 	}
 
 	@Override
 	public T removeAll(T elem) throws EmptyCollectionException {
-		// TODO Auto-generated method stub
-		return null;
+
+		if (isEmpty()) {
+			throw new EmptyCollectionException("Coleccion vacia");
+		} else {
+
+			DoubleNode<T> aux = cab.next;
+			T ret = null;
+
+			while (aux.content != null) {
+
+				if (aux.content.equals(elem)) {
+					ret = aux.content;
+					aux.previous.next = aux.next;
+					aux.next.previous = aux.previous;
+
+				}
+				aux = aux.next;
+
+			}
+
+			if (ret == null) {
+				throw new NoSuchElementException();
+			} else {
+				return ret;
+			}
+
+		}
+
 	}
 
 	@Override

@@ -221,9 +221,9 @@ public class DoubleLinkedListImplTests {
 	public void testIndexOfElem() {
 
 		Assert.assertEquals(3, lSABC.indexOf("C"));
-		//Assert.assertEquals(5, lSABCDE.indexOf("E"));
-		//lSABC.addNTimes("J", 5);
-		//Assert.assertEquals(4, lSABC.indexOf("J"));
+		// Assert.assertEquals(5, lSABCDE.indexOf("E"));
+		// lSABC.addNTimes("J", 5);
+		// Assert.assertEquals(4, lSABC.indexOf("J"));
 
 	}
 
@@ -249,5 +249,66 @@ public class DoubleLinkedListImplTests {
 	public void testIndexOfElemPNoEncontrado() {
 		Assert.assertEquals(3, lSABC.indexOf("A", 2));
 	}
+
+	@Test
+	public void testRemoveFirst() throws EmptyCollectionException {
+
+		Assert.assertEquals("[A, B, C, D, E]", lSABCDE.toString());
+		Assert.assertEquals("A", lSABCDE.removeFirst("A"));
+		Assert.assertEquals("[B, C, D, E]", lSABCDE.toString());
+		lSABCDE.addNTimes("F", 3);
+		Assert.assertEquals("[B, C, D, E, F, F, F]", lSABCDE.toString());
+		Assert.assertEquals("F", lSABCDE.removeFirst("F"));
+		Assert.assertEquals("[B, C, D, E, F, F]", lSABCDE.toString());
+		lSABC.addAtPos("G", 2);
+		lSABC.addAtPos("G", 5);
+		Assert.assertEquals("[A, G, B, C, G]", lSABC.toString());
+		Assert.assertEquals("G", lSABC.removeFirst("G"));
+		Assert.assertEquals("[A, B, C, G]", lSABC.toString());
+		
+		
+	}
+
+	@Test(expected = EmptyCollectionException.class)
+	public void testRemoveFirstColeccionVacia() throws EmptyCollectionException {
+
+		Assert.assertEquals("A", lS.removeFirst("A"));
+	}
+	
+	@Test(expected = NoSuchElementException.class)
+	public void testRemoveFirstElementoNoEncontrado() throws EmptyCollectionException {
+
+		Assert.assertEquals("K", lSABC.removeFirst("K"));	}
+	
+	@Test
+	public void testRemoveAll() throws EmptyCollectionException {
+		
+		Assert.assertEquals("[A, B, C, D, E]", lSABCDE.toString());
+		Assert.assertEquals("A", lSABCDE.removeAll("A"));
+		Assert.assertEquals("[B, C, D, E]", lSABCDE.toString());
+		lSABCDE.addNTimes("F", 3);
+		Assert.assertEquals("[B, C, D, E, F, F, F]", lSABCDE.toString());
+		Assert.assertEquals("F", lSABCDE.removeAll("F"));
+		Assert.assertEquals("[B, C, D, E]", lSABCDE.toString());
+		lSABC.addAtPos("G", 2);
+		lSABC.addAtPos("G", 5);
+		Assert.assertEquals("[A, G, B, C, G]", lSABC.toString());
+		Assert.assertEquals("G", lSABC.removeAll("G"));
+		Assert.assertEquals("[A, B, C]", lSABC.toString());
+		
+	}
+	
+	@Test(expected = EmptyCollectionException.class)
+	public void testRemoveAllColeccionVacia() throws EmptyCollectionException {
+
+		Assert.assertEquals("A", lS.removeAll("A"));
+	}
+	
+	@Test(expected = EmptyCollectionException.class)
+	public void testRemoveAllElementoNoENcontrado() throws EmptyCollectionException{
+
+		Assert.assertEquals("H", lS.removeAll("H"));
+	}
+	
 
 }
