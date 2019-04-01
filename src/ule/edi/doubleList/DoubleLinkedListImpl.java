@@ -445,7 +445,7 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 			if (flag && element.equals(elem)) {
 
 				ret = i + 1;
-				flag = false;
+				flag = false;// Solo entramos una vez en el if
 			}
 			i++;
 		}
@@ -468,18 +468,20 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 		int ret = -1;
 		int j = 1;
 
-		for (int i = 1; it.hasNext() != false; i++) {
+		for (int i = 1; it.hasNext() != false; i++) {// movemos el iterador siempre que haya siguiente
 			element = it.next();
 			if (i > p - 1 && flag) {
 				if (element.equals(elem)) {
 					ret = j;
-					flag = false;
+					flag = false; // solo entramos una vez en el if
 				}
-				j++;
+				System.out.println("I: " + i + "   J: " + j);
+				j++;// variable que empieza cuando pasamos de la p
+
 			}
 		}
 
-		if (ret == -1) {
+		if (ret == -1) {// si nunca entra en el if es que no hay dicho elemento
 			throw new NoSuchElementException();
 		} else {
 			return ret;
@@ -533,8 +535,8 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 
 				if (aux.content.equals(elem)) {
 					ret = aux.content;
-					aux.previous.next = aux.next;
-					aux.next.previous = aux.previous;
+					aux.previous.next = aux.next;// El anterior al elemento encontrado.next
+					aux.next.previous = aux.previous;// El siguiente al elemento encontrado.previus
 
 				}
 				aux = aux.next;
@@ -552,14 +554,37 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 	}
 
 	@Override
-	public T removeLast() {
-		// TODO Auto-generated method stub
-		return null;
+	public T removeLast() throws EmptyCollectionException { // COMPROBADO CIRCULAR
+
+		if (isEmpty()) {
+			throw new EmptyCollectionException("Vacia");
+		} else {
+			T ret = cab.previous.content;
+
+			cab.previous = cab.previous.previous;
+			cab.previous.next = cab;
+
+			return ret;
+		}
+
 	}
 
 	@Override
 	public void reverse() {
-		// TODO Auto-generated method stub
+
+		int vueltas = this.size() / 2;
+		
+		DoubleNode<T> alante = cab.next;
+		DoubleNode<T> atras = cab.previous;
+
+		for (int i = 0; i < vueltas; i++) {
+			T buff = alante.content;
+			alante.content = atras.content;
+			atras.content = buff;
+			
+			alante = alante.next;
+			atras = atras.previous;
+		}
 
 	}
 

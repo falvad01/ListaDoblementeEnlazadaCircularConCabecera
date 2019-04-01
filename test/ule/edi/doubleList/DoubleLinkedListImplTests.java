@@ -65,7 +65,7 @@ public class DoubleLinkedListImplTests {
 	public void testRemoveForwardItException() {
 		Iterator<String> i = lS.iterator();
 		i.remove();
-		;
+		
 	}
 
 	@Test
@@ -95,7 +95,7 @@ public class DoubleLinkedListImplTests {
 	public void testRemovereverseItException() {
 		Iterator<String> i = lS.reverseIterator();
 		i.remove();
-		;
+		
 	}
 
 	@Test
@@ -128,7 +128,7 @@ public class DoubleLinkedListImplTests {
 	public void testRemoveOddAndEvenItException() {
 		Iterator<String> i = lS.oddAndEvenIterator();
 		i.remove();
-		;
+		
 	}
 
 	@Test
@@ -147,9 +147,9 @@ public class DoubleLinkedListImplTests {
 	public void testAddLast() {
 
 		Assert.assertTrue(lS.isEmpty());
-		// lS.addLast("A");
-//		Assert.assertEquals("[A]", lS.toString());
-//		Assert.assertFalse(lS.isEmpty());
+		lS.addLast("A");
+		Assert.assertEquals("[A]", lS.toString());
+		Assert.assertFalse(lS.isEmpty());
 
 		lSABC.addLast("F");
 		Assert.assertEquals(lSABC.toString(), "[A, B, C, F]");
@@ -221,15 +221,15 @@ public class DoubleLinkedListImplTests {
 	public void testIndexOfElem() {
 
 		Assert.assertEquals(3, lSABC.indexOf("C"));
-		// Assert.assertEquals(5, lSABCDE.indexOf("E"));
-		// lSABC.addNTimes("J", 5);
-		// Assert.assertEquals(4, lSABC.indexOf("J"));
+		Assert.assertEquals(5, lSABCDE.indexOf("E"));
+		lSABC.addNTimes("J", 5);
+		Assert.assertEquals(4, lSABC.indexOf("J"));
 
 	}
 
 	@Test(expected = NoSuchElementException.class)
 	public void testIndexOfElemNoEncontrado() {
-		Assert.assertEquals(3, lSABC.indexOf("D"));
+		lSABC.indexOf("D");
 
 	}
 
@@ -247,7 +247,7 @@ public class DoubleLinkedListImplTests {
 
 	@Test(expected = NoSuchElementException.class)
 	public void testIndexOfElemPNoEncontrado() {
-		Assert.assertEquals(3, lSABC.indexOf("A", 2));
+		lSABC.indexOf("A", 2);
 	}
 
 	@Test
@@ -265,24 +265,24 @@ public class DoubleLinkedListImplTests {
 		Assert.assertEquals("[A, G, B, C, G]", lSABC.toString());
 		Assert.assertEquals("G", lSABC.removeFirst("G"));
 		Assert.assertEquals("[A, B, C, G]", lSABC.toString());
-		
-		
+
 	}
 
 	@Test(expected = EmptyCollectionException.class)
 	public void testRemoveFirstColeccionVacia() throws EmptyCollectionException {
 
-		Assert.assertEquals("A", lS.removeFirst("A"));
+		lS.removeFirst("A");
 	}
-	
+
 	@Test(expected = NoSuchElementException.class)
 	public void testRemoveFirstElementoNoEncontrado() throws EmptyCollectionException {
 
-		Assert.assertEquals("K", lSABC.removeFirst("K"));	}
-	
+		lSABC.removeFirst("K");
+	}
+
 	@Test
 	public void testRemoveAll() throws EmptyCollectionException {
-		
+
 		Assert.assertEquals("[A, B, C, D, E]", lSABCDE.toString());
 		Assert.assertEquals("A", lSABCDE.removeAll("A"));
 		Assert.assertEquals("[B, C, D, E]", lSABCDE.toString());
@@ -295,20 +295,51 @@ public class DoubleLinkedListImplTests {
 		Assert.assertEquals("[A, G, B, C, G]", lSABC.toString());
 		Assert.assertEquals("G", lSABC.removeAll("G"));
 		Assert.assertEquals("[A, B, C]", lSABC.toString());
-		
+
 	}
-	
+
 	@Test(expected = EmptyCollectionException.class)
 	public void testRemoveAllColeccionVacia() throws EmptyCollectionException {
 
-		Assert.assertEquals("A", lS.removeAll("A"));
+		lS.removeAll("A");
 	}
-	
-	@Test(expected = EmptyCollectionException.class)
-	public void testRemoveAllElementoNoENcontrado() throws EmptyCollectionException{
 
-		Assert.assertEquals("H", lS.removeAll("H"));
+	@Test(expected = NoSuchElementException.class)
+	public void testRemoveAllElementoNoENcontrado() throws EmptyCollectionException {
+
+		lSABC.removeAll("H");
+	}
+
+	@Test
+	public void testRemoveLast() throws EmptyCollectionException {
+
+		Assert.assertEquals("[A, B, C, D, E]", lSABCDE.toString());
+		assertEquals("E", lSABCDE.removeLast());
+		Assert.assertEquals("[A, B, C, D]", lSABCDE.toString());
+		assertEquals("D", lSABCDE.removeLast());
+		Assert.assertEquals("[A, B, C]", lSABCDE.toString());
+		assertEquals("C", lSABCDE.removeLast());
+		Assert.assertEquals("[A, B]", lSABCDE.toString());
+
+	}
+
+	@Test(expected = EmptyCollectionException.class)
+	public void testRemoveLastColecionVacia() throws EmptyCollectionException {
+
+		lS.removeLast();
+
 	}
 	
+	@Test
+	public void testReverse() {
+		
+		lSABC.reverse();
+		Assert.assertEquals("[C, B, A]", lSABC.toString());
+		lSABCDE.reverse();
+		Assert.assertEquals("[E, D, C, B, A]", lSABCDE.toString());
+		lS.reverse();
+		Assert.assertEquals("[]", lS.toString());
+		
+	}
 
 }
