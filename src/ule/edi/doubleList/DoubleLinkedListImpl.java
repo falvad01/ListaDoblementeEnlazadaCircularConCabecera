@@ -592,44 +592,42 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 
 		Iterator<T> itSub = part.iterator();// Iterador de la sublista
 		DoubleNode<T> aux = cab.next;
-		
+
 		int ret = -1;
 		boolean flag = true;
 		int i = 1;
-		while(flag && aux.content != null) {
-			
-			
+		while (flag && aux.content != null) {
+
 			if (itSub.next().equals(aux.content)) { // Miramos que elemento de la lista coincide con el primero de la
-												// sublista
+				// sublista
 				int coincidencias = 1;
 				DoubleNode<T> aux2 = aux.next;
 				for (int j = 0; itSub.hasNext(); j++) { // Cuando lo encontremos seguimos reccoriendo ambos a ver si
-					System.out.println("J: " + j);							// coinciden mas elementos
+					System.out.println("J: " + j); // coinciden mas elementos
 
-					System.out.println("AUXCONTEN "+aux2.content);
-					if(itSub.next().equals(aux2.content)) {
-						
+					System.out.println("AUXCONTEN " + aux2.content);
+					if (itSub.next().equals(aux2.content)) {
+
 						coincidencias++;
-						
+
 					}
 					aux2 = aux2.next;
-					
-					
+
 				}
-					System.out.println("CONINCIDENCIAS: " + coincidencias + " TAMANIO: " + part.size());
-				if(coincidencias == part.size()) {
+				System.out.println("CONINCIDENCIAS: " + coincidencias + " TAMANIO: " + part.size());
+				if (coincidencias == part.size()) {
 					flag = false;
 					ret = i;
-					
-				}else {
-					
-					itSub = part.iterator();//movemos hacia atras la sublist para que empiece de 0
-					
+
+				} else {
+
+					itSub = part.iterator();// movemos hacia atras la sublist para que empiece de 0
+
 				}
 
-			}else {//si no entra en el if, movemos hacia atras la sublist para que empiece de 0
+			} else {// si no entra en el if, movemos hacia atras la sublist para que empiece de 0
 				itSub = part.iterator();
-				
+
 			}
 			aux = aux.next;
 			i++;
@@ -640,13 +638,47 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 
 	@Override
 	public void interlace(DoubleLinkedList<T> other) {
-		
+
 		DoubleNode<T> aux = cab.next;
-		
-		while(aux.content !=null) {
+		Iterator<T> itOther = other.iterator();
+
+		if (!isEmpty()) {
+			
+			
+
+			while (aux.content != null) {
+
+				if (itOther.hasNext()) {
+					DoubleNode<T> buff = aux.next;// Nodo a guardar de la lista principal
+					DoubleNode<T> buff2 = new DoubleNode<T>(itOther.next()); // Nuevo nodo igual al nodo de la lista
+																				// secundaria
+					System.out.println("BUFF: " + buff2.content + "    " + "BUFF: " + buff.content);
+					aux.next = buff2;
+					buff2.previous = aux;
+					buff2.next = buff;
+					buff.previous = buff2;
+					System.out.println("BUFF2 NEXT: " + buff2.next.content);
+					aux = aux.next;
+
+				} else {
+
+				}
+
+				aux = aux.next;
+
+			}
+			
+		} else {
+			int i = 1;
+			while(itOther.hasNext()) {
+				this.addAtPos(itOther.next(), i);
+				System.out.println(i);
+				i++;
+					
+			}
+			
 			
 		}
-		
 
 	}
 

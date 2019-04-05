@@ -363,11 +363,17 @@ public class DoubleLinkedListImplTests {
 		DoubleLinkedListImpl<String> sublista = new DoubleLinkedListImpl<>("C", "D");
 		DoubleLinkedListImpl<String> sublista2 = new DoubleLinkedListImpl<>("C", "D","E");
 		DoubleLinkedListImpl<String> sublista3 = new DoubleLinkedListImpl<>("C", "D","E","F");
+		DoubleLinkedListImpl<String> sublista4 = new DoubleLinkedListImpl<>();
 		DoubleLinkedListImpl<String> lista = new DoubleLinkedListImpl<>("Z", "X","G", "H", "K");
 		
-		
-		Assert.assertEquals(lista.toString(),"[Z, C, X, D, H, K]");
-				lista.interlace(sublista);
+		lista.interlace(sublista);
+		Assert.assertEquals(lista.toString(),"[Z, C, X, D, G, H, K]");
+		sublista2.interlace(sublista);
+		Assert.assertEquals(sublista2.toString(),"[C, C, D, D, E]");
+		lS.interlace(sublista);
+		Assert.assertEquals(lS.toString(),"[C, D]");
+		sublista3.interlace(sublista4);
+		Assert.assertEquals(sublista3.toString(),"[C, D, E, F]");
 		
 	}
 
