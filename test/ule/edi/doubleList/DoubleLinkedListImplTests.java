@@ -1,7 +1,7 @@
 package ule.edi.doubleList;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -339,6 +339,35 @@ public class DoubleLinkedListImplTests {
 		Assert.assertEquals("[E, D, C, B, A]", lSABCDE.toString());
 		lS.reverse();
 		Assert.assertEquals("[]", lS.toString());
+		
+	}
+	
+	@Test
+	public void testIsSubList() {
+		
+		DoubleLinkedListImpl<String> sublista = new DoubleLinkedListImpl<>("C", "D");
+		DoubleLinkedListImpl<String> sublista2 = new DoubleLinkedListImpl<>("C", "D","E");
+		DoubleLinkedListImpl<String> sublista3 = new DoubleLinkedListImpl<>("C", "D","E","F");
+		DoubleLinkedListImpl<String> lista = new DoubleLinkedListImpl<>("C", "D","C", "D", "E");
+		
+		Assert.assertEquals(lSABCDE.isSubList(sublista), 3);
+		Assert.assertEquals(lista.isSubList(sublista2), 3);
+		Assert.assertEquals(lista.isSubList(sublista), 1);
+		Assert.assertEquals(lista.isSubList(sublista3), -1);
+			
+	}
+	
+	@Test
+	public void testInterlace() {
+		
+		DoubleLinkedListImpl<String> sublista = new DoubleLinkedListImpl<>("C", "D");
+		DoubleLinkedListImpl<String> sublista2 = new DoubleLinkedListImpl<>("C", "D","E");
+		DoubleLinkedListImpl<String> sublista3 = new DoubleLinkedListImpl<>("C", "D","E","F");
+		DoubleLinkedListImpl<String> lista = new DoubleLinkedListImpl<>("Z", "X","G", "H", "K");
+		
+		
+		Assert.assertEquals(lista.toString(),"[Z, C, X, D, H, K]");
+				lista.interlace(sublista);
 		
 	}
 

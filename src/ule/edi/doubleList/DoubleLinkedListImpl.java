@@ -460,8 +460,7 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 	}
 
 	@Override
-	public int indexOf(T elem, int p) {// TODO preguntar diferencia entre las excepciones
-
+	public int indexOf(T elem, int p) {
 		Iterator<T> it = this.iterator();
 		boolean flag = true;
 		T element;
@@ -573,7 +572,7 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 	public void reverse() {
 
 		int vueltas = this.size() / 2;
-		
+
 		DoubleNode<T> alante = cab.next;
 		DoubleNode<T> atras = cab.previous;
 
@@ -581,7 +580,7 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 			T buff = alante.content;
 			alante.content = atras.content;
 			atras.content = buff;
-			
+
 			alante = alante.next;
 			atras = atras.previous;
 		}
@@ -590,13 +589,64 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 
 	@Override
 	public int isSubList(DoubleLinkedList<T> part) {
-		// TODO Auto-generated method stub
-		return 0;
+
+		Iterator<T> itSub = part.iterator();// Iterador de la sublista
+		DoubleNode<T> aux = cab.next;
+		
+		int ret = -1;
+		boolean flag = true;
+		int i = 1;
+		while(flag && aux.content != null) {
+			
+			
+			if (itSub.next().equals(aux.content)) { // Miramos que elemento de la lista coincide con el primero de la
+												// sublista
+				int coincidencias = 1;
+				DoubleNode<T> aux2 = aux.next;
+				for (int j = 0; itSub.hasNext(); j++) { // Cuando lo encontremos seguimos reccoriendo ambos a ver si
+					System.out.println("J: " + j);							// coinciden mas elementos
+
+					System.out.println("AUXCONTEN "+aux2.content);
+					if(itSub.next().equals(aux2.content)) {
+						
+						coincidencias++;
+						
+					}
+					aux2 = aux2.next;
+					
+					
+				}
+					System.out.println("CONINCIDENCIAS: " + coincidencias + " TAMANIO: " + part.size());
+				if(coincidencias == part.size()) {
+					flag = false;
+					ret = i;
+					
+				}else {
+					
+					itSub = part.iterator();//movemos hacia atras la sublist para que empiece de 0
+					
+				}
+
+			}else {//si no entra en el if, movemos hacia atras la sublist para que empiece de 0
+				itSub = part.iterator();
+				
+			}
+			aux = aux.next;
+			i++;
+		}
+
+		return ret;
 	}
 
 	@Override
 	public void interlace(DoubleLinkedList<T> other) {
-		// TODO Auto-generated method stub
+		
+		DoubleNode<T> aux = cab.next;
+		
+		while(aux.content !=null) {
+			
+		}
+		
 
 	}
 
